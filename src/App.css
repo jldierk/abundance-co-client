@@ -1,42 +1,78 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.nav-bar {
+  height: 75px;
+  width: 100vw;
+  background-color: whitesmoke;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.nav-content {
+  padding: 20px;
+  display: flex;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar-item {
+  padding: 0px 5px 0px 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.table-row:hover {
+  background-color: lightblue;
+  transition: all .1s ease;
 }
 
-.card {
-  padding: 2em;
+.admin-input {
+  width: 400px;
 }
 
-.read-the-docs {
-  color: #888;
+.button {
+  width: 80px;
+  height: 30px;
+  border-radius: 15px;
+  color: var(--smoke);
+  background-color: whitesmoke;
+  transition: all .25s ease;
+  text-decoration: none;
+  border: 2px solid var(--smoke);
+}
+
+.button:hover {
+  color: whitesmoke;
+  background-color: var(--smoke);
+}
+
+.product-card {
+  padding: 15px;
+  width: 250px;
+  height: 300px;
+  border-radius: 10px;
+  transition: all .3s ease;
+  border: 1px solid var(--smoke);
+}
+
+.image-wrapper {
+  width: 250px;
+  height: 250px;
+}
+
+.product-image {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 30;
+  left: 30;
+}
+
+.scent-overlay {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 30;
+  left: 30;
+  background-color: white;
+  opacity: 0;
+  transition: all .2s ease;
+}
+
+.scent-overlay:hover {
+  opacity: .8;
 }
