@@ -14,7 +14,7 @@ const ProductCard = (props) => {
                 <img className="product-image" src={product.imageUrl}></img>
                 <div className="scent-overlay">
                     <div style={{opacity: "1", display: "flex", flex: "1", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "250px"}}>
-                        {scents.map(scent=> <div>{scent.scentName}</div>)}
+                        {scents && scents.map(scent=> <div>{scent.scentName}</div>)}
                     </div>
                 </div>
             </div>

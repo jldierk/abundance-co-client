@@ -1,3 +1,23 @@
+.main-content {
+  padding: 20px;
+}
+
+.footer {
+  padding: 20px;
+  background-color: rgb(147, 214, 218);
+}
+
+.input-wrapper {
+  display: flex;
+  /* flex-direction: column; */
+}
+
+.label {
+  text-align: right;
+  width: 100px;
+  padding-right: 5px;
+}
+
 .nav-bar {
   height: 75px;
   width: 100vw;
@@ -17,6 +37,7 @@
 
 .table-row:hover {
   background-color: lightblue;
+  cursor: pointer;
   transition: all .1s ease;
 }
 

@@ -8,6 +8,9 @@ class NavBar extends React.Component {
                 <div className="nav-content">
                     <div className="navbar-item">Abundance Logo</div>
                     <div className="navbar-item" style={{flex: 1}}></div>
+                    <div>
+                        <a href="/admin">Admin Console</a>
+                    </div>
                     <div className="navbar-item" style={{display:"flex", alignItems:"center"}}>
                         <img src={CartIcon}/>
                         <div>Cart</div>                        

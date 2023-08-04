@@ -6,7 +6,6 @@ const ProductForm = () => {
     const [productArr, setProductArr] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
-    console.log("url: " + import.meta.env.VITE_REACT_APP_API_URL);
 
     useEffect(() => {
         setLoading(true);
@@ -23,10 +22,15 @@ const ProductForm = () => {
         setSelectedProduct(selected);
     }
 
+    function addNewProduct() {
+        var newProduct = {};
+        setProductArr(productArr => [...productArr, newProduct]);
+        setSelectedProduct(newProduct);
+    }
+
     return (
         <div>
             <div>
-                {selectedProduct && <ProductCard product={selectedProduct}/>}
                 {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}
             </div>
             <h3>Product Table</h3>
@@ -44,6 +48,7 @@ const ProductForm = () => {
             </tr>
             )}
             </table>
+            <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
         </div>
     )
 }
@@ -53,14 +58,23 @@ function SelectedProduct(props) {
     const [inputName, setInputName] = useState(product.productName || "");
     const [inputDescription, setInputDescription] = useState(product.description || "");
     const [inputImageUrl, setInputImageUrl] = useState(product.inputImageUrl || "");
-    const [inputScents, setInputScents] = useState(product.scents || "");
+    var scents = convertScentsToString(product.scents);
+    const [inputScents, setInputScents] = useState(scents || "");
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => { 
         setInputName(product.productName || "");
         setInputDescription(product.description || "");
         setInputImageUrl(product.imageUrl || "");
+        setInputScents(convertScentsToString(product.scents));
     }, [product.productName, product.description, product.imageUrl] )
+
+    function convertScentsToString(scentArr) {
+        if (scentArr) {
+            return scentArr.map(scent=>scent.scentName).join(",");
+        }
+        return "";
+    }
     
     function saveProduct() {
         product.productName = inputName;
@@ -87,26 +101,31 @@ function SelectedProduct(props) {
     }
 
     return (
-        <div style={{margin: "20px"}}>
-            <h3>Update Product Details</h3>
+        <div style={{display: "flex", justifyContent: "space-evenly"}}>        
             <div>
-                <span>Name : </span>
-                <span><input className="admin-input" type="text" id="productName" name="productName" value={inputName} onChange={(e) => {setInputName(e.target.value)}}/></span>
-            </div>
-            <div>
-                <span>Description : </span>
-                <span><input className="admin-input" type="text" id="description" name="description" value={inputDescription} onChange={(e) => {setInputDescription(e.target.value)}}/></span>
-            </div>
-            <div>
-                <span>Image URL: </span>
-                <span><input className="admin-input" type="text" id="imageUrl" name="imageUrl" value={inputImageUrl} onChange={(e) => {setInputImageUrl(e.target.value)}}/></span>
-            </div>
-            <div>
-                <span>Scents: </span>
-                <span><input className="admin-input" type="text" id="scents" name="scents" value={inputScents} onChange={(e) => {setInputScents(e.target.value)}}/></span>
-            </div>
+                <h3>Update Product Details</h3>
+                <div className="input-wrapper">
+                    <span className="label">Name : </span>
+                    <span><input className="admin-input" type="text" id="productName" name="productName" value={inputName} onChange={(e) => {setInputName(e.target.value)}}/></span>
+                </div>
+                <div className="input-wrapper">
+                    <span className="label">Description : </span>
+                    <span><input className="admin-input" type="text" id="description" name="description" value={inputDescription} onChange={(e) => {setInputDescription(e.target.value)}}/></span>
+                </div>
+                <div className="input-wrapper">
+                    <span className="label">Image URL: </span>
+                    <span><input className="admin-input" type="text" id="imageUrl" name="imageUrl" value={inputImageUrl} onChange={(e) => {setInputImageUrl(e.target.value)}}/></span>
+                </div>
+                <div className="input-wrapper">
+                    <span className="label">Scents: </span>
+                    <span><input className="admin-input" type="text" id="scents" name="scents" value={inputScents} onChange={(e) => {setInputScents(e.target.value)}}/></span>
+                </div>
 
-            <button className="button" onClick={saveProduct.bind(this)}>Save</button>
+                <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={saveProduct.bind(this)}>Save</button>
+            </div>
+            <div>
+                <ProductCard product={product}/>
+            </div>
         </div>
     )
     
