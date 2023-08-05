@@ -3,21 +3,9 @@ import CartIcon from "../assets/cart.svg"
 import LoginButton from "./LoginButton";
 
 const NavBar = (props) => {
-    const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
-    const [cart, setCart] = useState(null);
-    const [user, setUser] = useState(null);
+    var user = props.user;
+    var cart = props.cart;
   
-    useEffect(() => {
-        // only attempt to load our cart if we have a user in scope
-        if (user && user.id) {
-            let uri = BACKEND_BASE_URL + "/api/v1/orders/cart"
-            fetch(uri, {credentials: 'include'})
-                .then(response => response.json())
-                .then(json => setCart(json))
-                .catch(error => console.error(error));
-        }      
-    }, [user]);
-
     var cartCount = 0;
     if (cart) {
         cartCount = cart.orderItems ? cart.orderItems.length : "not found";
@@ -37,7 +25,7 @@ const NavBar = (props) => {
                         <div>Cart ({cartCount})</div>                        
                     </div>
                     <div className="navbar-item">
-                        <LoginButton updateUser={setUser}/>
+                        <LoginButton user={user}/>
                     </div>
                 </div>
             </div>
