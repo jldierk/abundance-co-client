@@ -39,12 +39,16 @@ const ProductForm = () => {
                         {/* <th>Description</th> */}
                         {/* <th>Image Url</th> */}
                     </tr>
-                {productArr.map(product =>
-                <tr className="table-row" onClick={selectProduct.bind(this, product)}>
-                    <td>{product.productName}</td>
-                    {/* <td>{product.description}</td> */}
-                    {/* <td><a>{product.imageUrl}</a></td> */}
-                </tr>
+                {productArr.map(product => {
+                    var selected = selectedProduct && product.id == selectedProduct.id;
+                    return (
+                        <tr className={"table-row " + (selected ? "selected-row" : "")} onClick={selectProduct.bind(this, product)}>
+                            <td>{product.productName}</td>
+                            {/* <td>{product.description}</td> */}
+                            {/* <td><a>{product.imageUrl}</a></td> */}
+                        </tr>
+                    )
+                }
                 )}
                 </table>
                 <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>

@@ -1,24 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function ProductView(props) {
+    const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+    const [itemArr, setItemArr] = useState([]);
+    const [itemQuant, setQuantity] = useState(1);
     const location = useLocation();
     var product = location.state.product;
     if (!product) {return (<div>Product Not Found</div>)}
     
-    const [itemArr, setItemArr] = useState([]);
-    const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+    let cart = props.cart;
+    let item = itemArr[0];
+
+    function handleQuantityChange(event) {
+        var quantity = event.target.value;
+        setQuantity(quantity);
+    }
     
     useEffect(() => {
         let uri = BACKEND_BASE_URL + "/api/v1/products/" + product.id + "/items"
         fetch(uri)
         .then(response => response.json())
-        .then(json => setItemArr(json))
+        .then(json => {
+            setItemArr(json);
+            if (cart && cart.orderItems && json && json.length > 0) {
+                setQuantity(cart.orderItems.filter(oi=>oi.itemId == json[0].id)[0].quantity);
+            }
+        })
         .catch(error => console.error(error));
-    }, []);
+    }, [cart]);
     
     function addToCart(item) {
-        var postBody = {itemId:item.id, quantity: 1};
+        var quantInt = parseInt(itemQuant);
+        var postBody = {itemId:item.id, quantity: quantInt};
         
         const requestOptions = {    
             method: 'POST',
@@ -34,21 +48,20 @@ export default function ProductView(props) {
         .catch(err => {console.log("Error " + err.json)});
     }
     
-    let cart = props.cart;
-    let item = itemArr[0];
     return (
         <div className="main-content" style={{display:"flex"}}>        
             <div style={{flex: 1, display: "flex", alignItems:"center", justifyContent: "space-evenly"}}>
                 <div style={{flex: 1}}>
-                    <img style={{height: "400px", width:"400px"}} src={product.imageUrl}></img>
+                    <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "2px solid var(--smoke)"}} src={product.imageUrl}></img>
                 </div>
                 <div style={{flex: 1}}>
                     <h2>{product.productName}</h2>
+                    {product.scents && <div>{product.scents.map(scent=>scent.scentName).join(", ")}</div>}
                     <div>{product.description}</div>
                     
                     {item && <div>{item.size}</div>}
                     {item && <div>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</div>}
-                    {item && <AddToCartButton cart={cart} item={item} addToCartAction={addToCart}/>}
+                    <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant}/>
                 </div>
             </div>
         </div>
@@ -58,9 +71,25 @@ export default function ProductView(props) {
 function AddToCartButton(props) {
     var cart = props.cart;
     var item = props.item;
+    var quantity = props.quantity;
+
+    if (!item) {
+        return (<div><i>This product cannot be added to you cart because it does not have items associated with it.</i></div>)
+    }
 
     if (cart && cart.orderItems && cart.orderItems.some(oi=>oi.itemId == item.id)) {
-        return (<div>This is already in your cart</div>)
+        return (
+            <div>
+                <span>
+                    <select onChange={props.onChangeQuantity.bind(this)} value={quantity}>
+                        {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
+                    </select>
+                </span>   
+                <span>
+                    <button className="button" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
+                </span>
+            </div>
+        )
     } else {
         return (<button className="button" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
     }

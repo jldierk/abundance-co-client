@@ -46,6 +46,10 @@
   transition: all .1s ease;
 }
 
+.selected-row {
+  background-color: lightblue;
+}
+
 .admin-input {
   width: 400px;
 }
