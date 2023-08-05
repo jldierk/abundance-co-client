@@ -5,12 +5,12 @@ import NavBar from "./components/NavBar";
 const Layout = () => {
     return(
         <>
-            <NavBar/>
-            <div className="main-content">                
+            <div style={{display:"flex", flexDirection: "column", minHeight: "100vh"}}>
+                <NavBar/>
                 <Outlet/>
-            </div>
-            <div className="footer">
-                hand poured in chicago                            
+                <div className="footer">
+                    hand poured in chicago                            
+                </div>
             </div>
         </>
     );

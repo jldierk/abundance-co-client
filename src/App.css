@@ -1,5 +1,6 @@
 .main-content {
-  padding: 20px;
+  flex:1;
+  margin: 0% 10% 0% 10%;
 }
 
 .footer {
@@ -23,6 +24,10 @@
   width: 100vw;
   background-color: whitesmoke;
   align-items: center;
+  position: sticky;
+  position: -webkit-sticky;
+  top:0;
+  z-index: 1;
 }
 
 .nav-content {
@@ -46,7 +51,8 @@
 }
 
 .button {
-  width: 80px;
+  margin: 10px 0px 10px 0px;
+  padding: 5px 10px 5px 10px;
   height: 30px;
   border-radius: 15px;
   color: var(--smoke);
@@ -63,11 +69,16 @@
 
 .product-card {
   padding: 15px;
+  margin: 10px;
   width: 250px;
   height: 300px;
   border-radius: 10px;
   transition: all .3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid var(--smoke);
+  text-decoration: none;
 }
 
 .image-wrapper {

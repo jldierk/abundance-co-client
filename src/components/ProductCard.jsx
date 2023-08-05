@@ -20,7 +20,7 @@ const ProductCard = (props) => {
             </div>
             <div style={{margin: "5px 0px 5px 0px"}}>
                 <div><b>{product.productName}</b></div>
-                <div>{product.description}</div>
+                {/* <div>{product.description}</div> */}
             </div>
         </div>
     )

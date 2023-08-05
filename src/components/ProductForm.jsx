@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import ProductItemSet from "./ProductItemSet";
 
 const ProductForm = () => {
     const [loading, setLoading] = useState(true);
@@ -29,26 +30,29 @@ const ProductForm = () => {
     }
 
     return (
-        <div>
+        <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
             <div>
-                {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}
-            </div>
-            <h3>Product Table</h3>
-            <table>
-                <tr style={{textAlign: "left"}}>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Image Url</th>
+                <h3>Product Table</h3>
+                <table>
+                    <tr style={{textAlign: "left"}}>
+                        <th>Name</th>
+                        {/* <th>Description</th> */}
+                        {/* <th>Image Url</th> */}
+                    </tr>
+                {productArr.map(product =>
+                <tr className="table-row" onClick={selectProduct.bind(this, product)}>
+                    <td>{product.productName}</td>
+                    {/* <td>{product.description}</td> */}
+                    {/* <td><a>{product.imageUrl}</a></td> */}
                 </tr>
-            {productArr.map(product =>
-            <tr className="table-row" onClick={selectProduct.bind(this, product)}>
-                <td>{product.productName}</td>
-                <td>{product.description}</td>
-                <td><a>{product.imageUrl}</a></td>
-            </tr>
-            )}
-            </table>
-            <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
+                )}
+                </table>
+                <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
+            </div>
+            <div>
+                {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}                
+            </div>
+            
         </div>
     )
 }
@@ -101,7 +105,7 @@ function SelectedProduct(props) {
     }
 
     return (
-        <div style={{display: "flex", justifyContent: "space-evenly"}}>        
+        <div>        
             <div>
                 <h3>Update Product Details</h3>
                 <div className="input-wrapper">
@@ -124,7 +128,9 @@ function SelectedProduct(props) {
                 <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={saveProduct.bind(this)}>Save</button>
             </div>
             <div>
+                <h3>Sample View</h3>
                 <ProductCard product={product}/>
+                <ProductItemSet product={product}/>
             </div>
         </div>
     )

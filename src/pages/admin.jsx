@@ -4,7 +4,7 @@ import ProductForm from "../components/ProductForm";
 
 export default function Admin() {
     return (
-        <div style={{margin: "0% 10% 0% 10%"}}>
+        <div className="main-content">        
             <ProductForm></ProductForm>
         </div>
     )

@@ -1,5 +1,18 @@
 :root {
   --smoke: #2b2b2b;
+  font-family: "Creato";
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
+
+@font-face {
+  font-family: 'Creato';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Creato'), url('src/assets/fonts/CreatoDisplay-Regular.otf') format('opentype');
 }
 
 body {
