@@ -52,7 +52,7 @@ export default function ProductView(props) {
         <div className="main-content" style={{display:"flex"}}>        
             <div style={{flex: 1, display: "flex", alignItems:"center", justifyContent: "space-evenly"}}>
                 <div style={{flex: 1}}>
-                    <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "2px solid var(--smoke)"}} src={product.imageUrl}></img>
+                    <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "1px solid var(--smoke)"}} src={product.imageUrl}></img>
                 </div>
                 <div style={{flex: 1}}>
                     <h2>{product.productName}</h2>
@@ -81,16 +81,16 @@ function AddToCartButton(props) {
         return (
             <div>
                 <span>
-                    <select onChange={props.onChangeQuantity.bind(this)} value={quantity}>
+                    <select style={{marginRight:"15px", width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
                         {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
                     </select>
                 </span>   
                 <span>
-                    <button className="button" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
+                    <button className="button btn-inverse-colors" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
                 </span>
             </div>
         )
     } else {
-        return (<button className="button" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
+        return (<button className="button btn-inverse-colors" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
     }
 }

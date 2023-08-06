@@ -12,9 +12,9 @@
 
 .info-block {
   text-align: center;
-  background-color: var(--secondaryColor);
+  background-color: var(--background);
   padding: 100px;
-  color: var(--background);
+  color: var(--smoke);
 }
 
 .input-wrapper {
@@ -49,7 +49,7 @@
 
 .navbar-item {
   padding: 0px 5px 0px 5px;
-  margin: 0px 10px 0px 10px;
+  margin: 0px 5px 0px 5px;
 }
 
 .table-row:hover {
@@ -71,16 +71,32 @@
   height: 30px;
   cursor: pointer;
   border-radius: 15px;
-  color: var(--smoke);
-  background-color: var(--background);
   transition: all .25s ease;
   text-decoration: none;
+}
+
+.btn-primary-colors {
+  background-color: var(--secondaryColor);
+  color: var(--background);
+  border: 2px solid var(--background);
+}
+
+.btn-primary-colors:hover {
+  color: var(--secondaryColor);
+  background-color: var(--background);
+  border: 2px solid var(--secondaryColor);
+}
+
+.btn-inverse-colors{
+  color: var(--smoke);
+  background-color: var(--background);
   border: 2px solid var(--smoke);
 }
 
-.button:hover {
-  color: var(--background);
+.btn-inverse-colors:hover{
   background-color: var(--smoke);
+  color: var(--background);
+  border: 2px solid var(--background);
 }
 
 .product-card {
