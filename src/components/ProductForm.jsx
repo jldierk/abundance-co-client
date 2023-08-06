@@ -30,15 +30,10 @@ const ProductForm = () => {
     }
 
     return (
-        <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
-            <div>
-                <h3>Product Table</h3>
+        <div style={{display: "flex", justifyContent: "space-between"}}>
+            <div style={{flex:1}}>
+                <h3>Products</h3>
                 <table>
-                    <tr style={{textAlign: "left"}}>
-                        <th>Name</th>
-                        {/* <th>Description</th> */}
-                        {/* <th>Image Url</th> */}
-                    </tr>
                 {productArr.map(product => {
                     var selected = selectedProduct && product.id == selectedProduct.id;
                     return (
@@ -53,7 +48,7 @@ const ProductForm = () => {
                 </table>
                 <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
             </div>
-            <div>
+            <div style={{flex:4}}>
                 {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}                
             </div>
             
@@ -137,8 +132,7 @@ function SelectedProduct(props) {
                 <ProductItemSet product={product}/>
             </div>
         </div>
-    )
-    
+    )   
 }
 
 export default ProductForm;

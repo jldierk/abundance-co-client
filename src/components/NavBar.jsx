@@ -17,12 +17,16 @@ const NavBar = (props) => {
                 <div className="navbar-item" style={{flex: 1}}></div>
                 <div className="navbar-item" style={{flex: 1, justifyContent: "center", textAlign: "center"}}><a href="/">Abundance Logo</a></div>
                 <div style={{flex: 1, display: "flex", alignItems: "center", justifyContent: "right"}}>                    
-                    <div>
+                    <div className="navbar-item">
                         <a href="/admin">Admin Console</a>
                     </div>
                     <div className="navbar-item" style={{display:"flex", alignItems:"center"}}>
-                        <img src={CartIcon}/>
-                        <div>Cart ({cartCount})</div>                        
+                        <a href="/cart">
+                            <div style={{display:"flex", alignItems: "center"}}>
+                                <img src={CartIcon}/>
+                                <div><span>Cart</span><span className="bubble-text">{cartCount}</span></div>
+                            </div>
+                        </a>
                     </div>
                     <div className="navbar-item">
                         <LoginButton user={user}/>

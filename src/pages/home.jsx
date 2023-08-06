@@ -20,8 +20,11 @@ export default function Home() {
     }, []);
 
     return (
-        <div>        
-            <img src="src/assets/images/abundance-banner.jpg" style={{width: "100vw"}}></img>        
+        <div style={{backgroundColor: "var(--background)"}}>        
+            <div className="info-block">
+                Abundance Candles are hand-poured in Chicago.
+            </div>
+            {/* <img src="src/assets/images/abundance-banner.jpg" style={{width: "100vw"}}></img>         */}
             <div className="main-content">               
                 <div style={{display: "flex", justifyContent: "space-evenly", margin:"50px"}}>            
                     {productArr.map(product=><a onClick={()=>{toProductView(product)}}><ProductCard product={product}></ProductCard></a>)}            

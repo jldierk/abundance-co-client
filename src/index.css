@@ -1,5 +1,7 @@
 :root {
   --smoke: #2b2b2b;
+  --secondaryColor: #86bebb;
+  --background: #fbfaf5;
   font-family: "Creato";
 }
 
@@ -17,6 +19,7 @@ a {
 
 body {
   margin: 0;
+  background-color: var(--background);
 }
 
 table {
