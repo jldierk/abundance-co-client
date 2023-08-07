@@ -12,7 +12,7 @@ const ProductItemSet = (props) => {
           .then(response => response.json())
           .then(json => setItemArr(json))
           .catch(error => console.error(error));
-    }, [itemArr]);
+    }, [product]);
 
     return (
         <div>

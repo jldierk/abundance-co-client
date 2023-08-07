@@ -6,6 +6,7 @@ import Admin from './pages/admin'
 import ProductView from './pages/product'
 import { useEffect, useState } from 'react'
 import CartPage from './pages/cart'
+import CheckOut from './pages/checkOut'
 
 function App() {
   const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -36,6 +37,7 @@ function App() {
             <Route path="admin" element={<Admin />} />
             <Route path="product" element={<ProductView cart={cart} updateCart={setCart}/>} />
             <Route path="cart" element={<CartPage cart={cart} setCartCallback={setCart}/>} />
+            <Route path="checkOut" element={<CheckOut cart={cart} setCartCallback={setCart}/>} />
             <Route path="*" element={<Home />} />
           </Route>
         </Routes>

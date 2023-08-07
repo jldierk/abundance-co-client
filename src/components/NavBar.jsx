@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CartIcon from "../assets/cart.svg"
+import AbundanceLogo from "../assets/abundanceLogo.svg"
 import LoginButton from "./LoginButton";
 
 const NavBar = (props) => {
@@ -15,7 +16,9 @@ const NavBar = (props) => {
         <div className="nav-bar">
             <div className="nav-content">
                 <div className="navbar-item" style={{flex: 1}}></div>
-                <div className="navbar-item" style={{flex: 1, justifyContent: "center", textAlign: "center"}}><a href="/">Abundance Logo</a></div>
+                <div className="navbar-item" style={{flex: 1, justifyContent: "center", textAlign: "center"}}>
+                    <a href="/"><img style={{width:"300px", height:"100px"}} src={AbundanceLogo}/></a>
+                </div>
                 <div style={{flex: 1, display: "flex", alignItems: "center", justifyContent: "right"}}>                    
                     <div className="navbar-item" style={{display:"flex", alignItems:"center"}}>
                         <a href="/cart">

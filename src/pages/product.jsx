@@ -51,10 +51,10 @@ export default function ProductView(props) {
     return (
         <div className="main-content" style={{display:"flex"}}>        
             <div style={{flex: 1, display: "flex", alignItems:"center", justifyContent: "space-evenly"}}>
-                <div style={{flex: 1}}>
+                <div style={{flex: 3, textAlign:"center"}}>
                     <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "1px solid var(--smoke)"}} src={product.imageUrl}></img>
                 </div>
-                <div style={{flex: 1}}>
+                <div style={{flex: 2}}>
                     <h2>{product.productName}</h2>
                     {product.scents && <div>{product.scents.map(scent=>scent.scentName).join(", ")}</div>}
                     <div>{product.description}</div>
@@ -86,11 +86,11 @@ function AddToCartButton(props) {
                     </select>
                 </span>   
                 <span>
-                    <button className="button btn-inverse-colors" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
+                    <button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
                 </span>
             </div>
         )
     } else {
-        return (<button className="button btn-inverse-colors" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
+        return (<button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
     }
 }

@@ -4,33 +4,25 @@ export default function CartPage(props) {
     var cart = props.cart;
     if (!cart || !cart.orderItems) return (<div>No cart information found</div>);
 
-    const [costMap, setCostMap] = useState(null);
-    const [total, setTotal] = useState(0);
+    function submitOrder() {
 
-    useEffect(() => {
-        var totalArr = costMap ? Object.values(costMap).filter(cost=>!isNaN(cost)).map(price=>parseFloat(price).toPrecision(4)) : [0];
-        setTotal(totalArr.map(cost=>parseFloat(cost)).reduce((partialSum, a) => partialSum + a, 0));
-    }, [costMap, cart]);
-
-    function addToCostMap(itemCost) {
-        if (!isNaN(itemCost.total)) {
-            setCostMap((prevState) => ({ ...prevState, [itemCost.itemId]: itemCost.total }));
-        }
     }
 
     return (
         <div className="main-content">
-            <div style={{display:"flex", alignItems: "center", justifyContent: "space-evenly"}}>
+            <div style={{display:"flex", alignItems: "center", justifyContent: "space-evenly"}}>                
                 <div style={{display:"flex", flexDirection: "column"}}>
+                    <div><h2>Your Cart</h2></div>
                     {cart.orderItems.map(oi=>{
-                        return (<OrderItemCard itemId={oi.itemId} quantity={oi.quantity} totalCallback={addToCostMap} setCartCallback={props.setCartCallback} setCostMapCallback={setCostMap}/>)
+                        return (<OrderItemCard itemId={oi.itemId} quantity={oi.quantity} setCartCallback={props.setCartCallback}/>)
                     })}
                 </div>
                 <div style={{border:"1px solid var(--smoke)", padding: "20px", borderRadius: "10px"}}>
                     <h3 style={{margin:"0px"}}>Cart Summary</h3>
                     <div>
-                        <div>Total Cost: {new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(total)}</div>
+                        <div>Total Cost: {new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal)}</div>
                     </div>
+                    <a href="/checkOut"><button style={{margin: "10px 0px px 0px"}} className="button btn-black-white">Check Out</button></a>
                 </div>
             </div>
         </div>
@@ -67,8 +59,7 @@ function OrderItemCard(props) {
         fetch(url, requestOptions)
         .then(response=>response.json())
         .then(json=> {
-            props.setCartCallback(json)
-            props.setCostMapCallback((prevState) => ({ ...prevState, [itemDetails.itemId]: 0 }));
+            props.setCartCallback(json);
         })
         .then(console.log("Removed item to cart"))
         .catch(err => {console.log("Error " + err.json)});
@@ -85,7 +76,7 @@ function OrderItemCard(props) {
                 <div>Quantity: {quantity}</div>
                 <br/>
                 <div>Item Total: {new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(itemTotal)}</div>
-                <button style={{margin: "10px 0px 10px 0px"}} className="button" onClick={() => {removeFromCart(itemDetail)}}>Remove From Cart</button>
+                <button style={{margin: "10px 0px 10px 0px"}} className="button btn-black-white" onClick={() => {removeFromCart(itemDetail)}}>Remove From Cart</button>
             </div>
         </div>
     )

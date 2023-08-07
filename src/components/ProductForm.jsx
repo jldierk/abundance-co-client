@@ -46,12 +46,15 @@ const ProductForm = () => {
                 }
                 )}
                 </table>
-                <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
+                <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
             </div>
             <div style={{flex:4}}>
                 {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}                
             </div>
-            
+            <div style={{flex:3}}>
+                {selectedProduct && <h3>Sample View</h3>}
+                {selectedProduct && <ProductCard product={selectedProduct}/>}
+            </div>
         </div>
     )
 }
@@ -108,6 +111,10 @@ function SelectedProduct(props) {
             <div>
                 <h3>Update Product Details</h3>
                 <div className="input-wrapper">
+                    <span className="label">Product ID : </span>
+                    <span>{product.id}</span>
+                </div>
+                <div className="input-wrapper">
                     <span className="label">Name : </span>
                     <span><input className="admin-input" type="text" id="productName" name="productName" value={inputName} onChange={(e) => {setInputName(e.target.value)}}/></span>
                 </div>
@@ -124,11 +131,9 @@ function SelectedProduct(props) {
                     <span><input className="admin-input" type="text" id="scents" name="scents" value={inputScents} onChange={(e) => {setInputScents(e.target.value)}}/></span>
                 </div>
 
-                <button className="button" style={{marginTop: "15px", marginBottom: "15px"}} onClick={saveProduct.bind(this)}>Save</button>
+                <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={saveProduct.bind(this)}>Save</button>
             </div>
             <div>
-                <h3>Sample View</h3>
-                <ProductCard product={product}/>
                 <ProductItemSet product={product}/>
             </div>
         </div>

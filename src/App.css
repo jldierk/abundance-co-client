@@ -1,6 +1,6 @@
 .main-content {
   flex:1;
-  margin: 0% 10% 0% 10%;
+  margin: 30px 10% 10% 30px;
   background-color: var(--background);
 }
 
@@ -24,12 +24,11 @@
 
 .label {
   text-align: right;
-  width: 100px;
+  min-width: 150px;
   padding-right: 5px;
 }
 
 .nav-bar {
-  height: 75px;
   width: 100vw;
   background-color: var(--secondaryColor);
   color: var(--background);
@@ -56,10 +55,12 @@
   background-color: var(--secondaryColor);
   cursor: pointer;
   transition: all .1s ease;
+  color: var(--background);
 }
 
 .selected-row {
   background-color: var(--secondaryColor);
+  color: var(--background);
 }
 
 .admin-input {
@@ -87,13 +88,13 @@
   border: 2px solid var(--secondaryColor);
 }
 
-.btn-inverse-colors{
+.btn-black-white{
   color: var(--smoke);
   background-color: var(--background);
   border: 2px solid var(--smoke);
 }
 
-.btn-inverse-colors:hover{
+.btn-black-white:hover{
   background-color: var(--smoke);
   color: var(--background);
   border: 2px solid var(--background);
