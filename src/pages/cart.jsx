@@ -48,7 +48,7 @@ function OrderItemCard(props) {
             props.totalCallback({itemId: itemId, total: total});
         })        
           .catch(error => console.error(error));
-    }, []);
+    }, [itemId]);
 
     function removeFromCart(itemDetails) {        
         const requestOptions = {    
