@@ -9,7 +9,7 @@ const NavBar = (props) => {
   
     var cartCount = 0;
     if (cart) {
-        cartCount = cart.orderItems ? cart.orderItems.length : "not found";
+        cartCount = cart.orderItems ? cart.orderItems.length : 0;
     }
 
     return (
@@ -31,9 +31,11 @@ const NavBar = (props) => {
                     <div className="navbar-item">
                         <a href="/admin"><button className="button btn-primary-colors">Admin Console</button></a>
                     </div>
-                    <div className="navbar-item">
+                
+                    {/* We're not going to allow users to login, people can just check in as guests
+                     <div className="navbar-item">
                         <LoginButton user={user}/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

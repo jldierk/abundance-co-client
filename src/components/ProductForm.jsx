@@ -30,8 +30,8 @@ const ProductForm = () => {
     }
 
     return (
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-            <div style={{flex:1}}>
+        <div style={{display: "flex", width:"100%", justifyContent: "space-evenly"}}>
+            <div>
                 <h3>Products</h3>
                 <table>
                 {productArr.map(product => {
@@ -48,10 +48,10 @@ const ProductForm = () => {
                 </table>
                 <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
             </div>
-            <div style={{flex:4}}>
+            <div>
                 {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}                
             </div>
-            <div style={{flex:3}}>
+            <div>
                 {selectedProduct && <h3>Sample View</h3>}
                 {selectedProduct && <ProductCard product={selectedProduct}/>}
             </div>

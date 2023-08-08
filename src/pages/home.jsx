@@ -26,8 +26,10 @@ export default function Home() {
             </div>
             {/* <img src="src/assets/images/abundance-banner.jpg" style={{width: "100vw"}}></img>         */}
             <div className="main-content">               
-                <div style={{display: "flex", justifyContent: "space-evenly", margin:"50px"}}>            
-                    {productArr.map(product=><a onClick={()=>{toProductView(product)}}><ProductCard product={product}></ProductCard></a>)}            
+                <div style={{display:"flex", width:"100%", justifyContent:"center"}}>
+                    <div style={{display: "flex", width:"910px", flexWrap:"wrap", justifyContent: "space-evenly", margin:"50px"}}>            
+                        {productArr.map(product=><div><a onClick={()=>{toProductView(product)}}><ProductCard product={product}></ProductCard></a></div>)}            
+                    </div>
                 </div>
             </div>            
         </div>
