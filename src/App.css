@@ -1,6 +1,7 @@
 .main-content {
   flex:1;
-  background-color: var(--background);
+  background-color: var(--background);  
+  margin: 30px;
 }
 
 .footer {
@@ -165,3 +166,21 @@
   margin: 0px 5px 0px 5px;
 }
 
+.warning {
+  background-color: #ffffac;
+  color: var(--smoke_);
+  border: 2px solid #e3d15f;
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 3px;
+}
+
+.validation-error {
+  background-color: #e2a1a1;
+  border-color: #ff5e5e;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+}

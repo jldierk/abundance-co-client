@@ -17,12 +17,16 @@ export default function CartPage(props) {
                         return (<OrderItemCard itemId={oi.itemId} quantity={oi.quantity} setCartCallback={props.setCartCallback}/>)
                     })}
                 </div>
-                <div style={{border:"1px solid var(--smoke)", padding: "20px", borderRadius: "10px"}}>
-                    <h3 style={{margin:"0px"}}>Cart Summary</h3>
+                <div style={{border:"1px solid var(--smoke)", width:"200px", minHeight:"200px", padding: "20px", margin:"30px", borderRadius: "10px", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                     <div>
-                        <div>Total Cost: {new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal)}</div>
+                        <h3 style={{marginTop:"0px",marginBottom:"10px"}}>Cart Summary</h3>
+                        <div>
+                            <div>Total Cost: {new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal)}</div>
+                        </div>
                     </div>
-                    <a href="/checkOut"><button style={{margin: "10px 0px px 0px"}} className="button btn-black-white">Check Out</button></a>
+                    <div>
+                        <a href="/checkOut"><button style={{margin: "10px 0px 5px 0px", width: "100%"}} className="button btn-black-white">Proceed</button></a>
+                    </div>
                 </div>
             </div>
         </div>
