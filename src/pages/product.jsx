@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import ButtonWithLoad from "../components/ButtonWithLoad";
 
 export default function ProductView(props) {
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
     const [itemArr, setItemArr] = useState([]);
     const [itemQuant, setQuantity] = useState(1);
+    const [saving, setSaving] = useState(false);
+    const [saved, setSaved] = useState(false);
     const location = useLocation();
     var product = location.state.product;
     if (!product) {return (<div>Product Not Found</div>)}
@@ -15,6 +18,7 @@ export default function ProductView(props) {
     function handleQuantityChange(event) {
         var quantity = event.target.value;
         setQuantity(quantity);
+        setSaved(false);
     }
     
     useEffect(() => {
@@ -31,6 +35,7 @@ export default function ProductView(props) {
     }, [cart]);
     
     function addToCart(item) {
+        setSaving(true);
         var quantInt = parseInt(itemQuant);
         var postBody = {itemId:item.id, quantity: quantInt};
         
@@ -43,7 +48,11 @@ export default function ProductView(props) {
         let url = BACKEND_BASE_URL + '/api/v1/orders/cart';
         fetch(url, requestOptions)
         .then(response=>response.json())
-        .then(json=>props.updateCart(json))
+        .then(json=>{
+            props.updateCart(json); 
+            setSaving(false);
+            setSaved(true);
+        })
         .then(console.log("Added item to cart"))
         .catch(err => {console.log("Error " + err.json)});
     }
@@ -61,7 +70,7 @@ export default function ProductView(props) {
                     
                     {item && <div>{item.size}</div>}
                     {item && <div>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</div>}
-                    <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant}/>
+                    <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant} saving={saving} saved={saved}/>                                        
                 </div>
             </div>
         </div>
@@ -72,21 +81,26 @@ function AddToCartButton(props) {
     var cart = props.cart;
     var item = props.item;
     var quantity = props.quantity;
+    var saved = props.saved;
 
     if (!item) {
         return (<div><i>This product cannot be added to you cart because it does not have items associated with it.</i></div>)
     }
 
+    useEffect(() => {},[props.saving])
+
     if (cart && cart.orderItems && cart.orderItems.some(oi=>oi.itemId == item.id)) {
         return (
-            <div>
+            <div style={{marginTop: "15px", marginBottom: "15px"}}>
                 <span>
                     <select style={{marginRight:"15px", width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
                         {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
                     </select>
-                </span>   
+                </span>              
                 <span>
-                    <button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Update Cart</button>
+                    {/* <button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Update Cart</button> */}
+                    {!saved && <ButtonWithLoad height="30px" buttonLabel="Update Quantity" onClickFunction={() => props.addToCartAction(item)} loading={props.saving}/>}
+                    {saved && <span>Cart Updated!</span>}
                 </span>
             </div>
         )

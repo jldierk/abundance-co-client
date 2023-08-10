@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ButtonWithLoad from "../components/ButtonWithLoad";
 
 export default function CheckOut(props) {
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -8,10 +9,11 @@ export default function CheckOut(props) {
     const [invalidEmail, setInvalidEmail] = useState(false);
     const emailRegExp = new RegExp("\\S+@\\S+\\.\\S+");
     const [submitted, setSubmitted] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     var cart = props.cart;
-    if (submitted) return (<OrderSubmitted/>);
-    else if (!cart || !cart.orderItems) return (<div className="info-block">No cart information found</div>);
+    if (submitted) return (<div className="main-content"><OrderSubmitted/></div>);
+    else if (!cart || !cart.orderItems) return (<div className="main-content"><div className="info-block">No cart information found</div></div>);
     
     let shippingCost = deliveryMethod == "DELIVERY" ? 10 : 0;
     
@@ -29,7 +31,8 @@ export default function CheckOut(props) {
             setInvalidEmail(true);
             return;
         }
-
+        
+        setSaving(true);
         let uri = BACKEND_BASE_URL + "/api/v1/orders/cart/submit"
         fetch(uri, {  
             method: 'POST',
@@ -41,6 +44,7 @@ export default function CheckOut(props) {
         .then(json => {
             props.setCartCallback(null);
             setSubmitted(true);
+            setSaving(false);
         }) //null out the cart
         .catch(error => console.error(error));
     }
@@ -84,7 +88,7 @@ export default function CheckOut(props) {
                         </tr>
                         <tr>
                             <td></td>
-                            <td><button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={()=>{submitOrder()}}>Submit Order</button></td>
+                            <td><ButtonWithLoad height="30px" buttonLabel="Submit Order" onClickFunction={() => submitOrder()} loading={saving}/></td>
                         </tr>
                     </table>                
                 </div>   

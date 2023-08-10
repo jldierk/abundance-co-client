@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function CartPage(props) {
     var cart = props.cart;
-    if (!cart || !cart.orderItems) return (<div>No cart information found</div>);
-
-    function submitOrder() {
-
-    }
+    if (!cart || !cart.orderItems) return (<div className="main-content"><div className="info-block">No cart information found</div></div>);
 
     return (
         <div className="main-content">
