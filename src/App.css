@@ -190,10 +190,14 @@
 }
 
 .spinner {
-  border-left: 5px solid var(--smoke);
+  border: 5px solid transparent;
   border-radius: 50%;
   height: 30px;
   width: 30px;
+}
+
+.spinner-left {
+  border-left-color: var(--smoke);
 }
 
 @keyframes rotation {

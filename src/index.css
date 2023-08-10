@@ -1,3 +1,7 @@
+*::after, *::before {
+  box-sizing: border-box;
+}
+
 :root {
   --smoke: #2b2b2b;
   --secondaryColor: #78a0b4;
