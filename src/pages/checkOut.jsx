@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonWithLoad from "../components/ButtonWithLoad";
 
 export default function CheckOut(props) {
@@ -10,12 +10,15 @@ export default function CheckOut(props) {
     const emailRegExp = new RegExp("\\S+@\\S+\\.\\S+");
     const [submitted, setSubmitted] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [address, setAddress] = useState({});
+    const [comments, setComments] = useState("");
 
     var cart = props.cart;
     if (submitted) return (<div className="main-content"><OrderSubmitted/></div>);
     else if (!cart || !cart.orderItems) return (<div className="main-content"><div className="info-block">No cart information found</div></div>);
     
-    let shippingCost = deliveryMethod == "DELIVERY" ? 10 : 0;
+    let isDelivery = deliveryMethod == "DELIVERY";
+    let shippingCost = isDelivery ? 10 : 0;
     
     function changeDeliveryMethod(e) {
         setDeliveryMethod(e.target.value);
@@ -38,7 +41,7 @@ export default function CheckOut(props) {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({userEmail: email, deliveryMethod: deliveryMethod})
+            body: JSON.stringify({userEmail: email, deliveryMethod: deliveryMethod, address: address, comments: comments})
         })
         .then(response => response.json())
         .then(json => {
@@ -59,6 +62,24 @@ export default function CheckOut(props) {
                     <div className="warning" style={{marginTop: "5px"}}>This website will not take any payment information directly. We will contact you directly to organize payment and delivery.</div>
                     <table style={{border: "none"}}>
                         <tr>
+                            <td className="label">Delivery Method:</td>
+                            <td>
+                                <select style={{marginRight:"15px", width:"160px"}} onChange={changeDeliveryMethod.bind(this)} value={deliveryMethod}>
+                                    <option key="delivery_1" value="DELIVERY">Delivery</option>
+                                    <option key="delivery_2" value="PICK_UP">Pick Up</option>
+                                </select>
+                            </td>
+                        </tr>
+                        {isDelivery && <AddressInput onChange={setAddress} address={address}/>}
+                        {!isDelivery && <PickupComments onChange={setComments} comments={comments}/>}
+                        <tr>
+                            <td className="label">Email:</td>
+                            <td>
+                                <input className={"admin-input " + invalidEmailClass} style={{width:"150px"}} type="text" id="email" name="email" onChange={(e) => {updateEmail(e.target.value)}} value={email}/>
+                                {invalidEmail && <div className="error-message">Please enter an email address to submit your order</div>}
+                            </td>
+                        </tr>
+                        <tr>
                             <td className="label">Order Subtotal:</td>
                             <td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal)}</td>
                         </tr>
@@ -71,22 +92,6 @@ export default function CheckOut(props) {
                             <td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal + shippingCost)}</td>
                         </tr>
                         <tr>
-                            <td className="label">Email:</td>
-                            <td>
-                                <input className={"admin-input " + invalidEmailClass} style={{width:"150px"}} type="text" id="email" name="email" onChange={(e) => {updateEmail(e.target.value)}} value={email}/>
-                                {invalidEmail && <div className="error-message">Please enter an email address to submit your order</div>}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="label">Delivery Method:</td>
-                            <td>
-                                <select style={{marginRight:"15px", width:"160px"}} onChange={changeDeliveryMethod.bind(this)} value={deliveryMethod}>
-                                    <option key="delivery_1" value="DELIVERY">Delivery</option>
-                                    <option key="delivery_2" value="PICK_UP">Pick Up</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
                             <td></td>
                             <td><ButtonWithLoad height="30px" buttonLabel="Submit Order" onClickFunction={() => submitOrder()} loading={saving}/></td>
                         </tr>
@@ -94,6 +99,62 @@ export default function CheckOut(props) {
                 </div>   
             </div>
         </div>
+    )
+}
+
+function PickupComments(props) {
+    return (
+        <React.Fragment>
+            <tr>
+                <td className="label">When is best to pickup the order?:</td>
+                <td><textarea className={"admin-input "} style={{width:"150px", height:"50px"}} onChange={(e) => {props.onChange(e.target.value)}} value={props.comments}/></td>
+            </tr>
+        </React.Fragment>
+    )
+}
+
+function AddressInput(props) {
+    const [addressLine1, setAddressLine1] = useState(props.address.addresssLine1);
+    const [addressLine2, setAddressLine2] = useState(props.address.addresssLine2);
+    const [city, setCity] = useState(props.address.city);
+    const [state, setState] = useState(props.address.state);
+    const [zip, setZip] = useState(props.address.zip);
+
+    useEffect(() => {props.onChange(getAddress())}, [addressLine1, addressLine2, city, state, zip]);
+
+    function getAddress() {
+        return {
+            addressLine1: addressLine1,
+            addressLine2: addressLine2,
+            city: city,
+            state: state,
+            zip: zip,
+        }
+    }
+
+    return (
+        <React.Fragment>
+            <tr>
+                <td className="label">Address Line 1:</td>
+                <td><input className={"admin-input "} style={{width:"150px"}} type="text" onChange={(e) => {setAddressLine1(e.target.value)}} value={addressLine1}/></td>
+            </tr>
+            <tr>
+                <td className="label">Address Line 2:</td>
+                <td><input className={"admin-input "} style={{width:"150px"}} type="text" onChange={(e) => {setAddressLine2(e.target.value)}} value={addressLine2}/></td>
+            </tr>
+            <tr>
+                <td className="label">City:</td>
+                <td><input className={"admin-input "} style={{width:"150px"}} type="text" onChange={(e) => {setCity(e.target.value)}} value={city}/></td>
+            </tr>
+            <tr>
+                <td className="label">State:</td>
+                <td><input className={"admin-input "} style={{width:"50px"}} type="text" onChange={(e) => {setState(e.target.value)}} value={state}/></td>
+            </tr>
+            <tr>
+                <td className="label">Zip Code:</td>
+                <td><input className={"admin-input "} style={{width:"50px"}} type="text" onChange={(e) => {setZip(e.target.value)}} value={zip}/></td>
+            </tr>
+        </React.Fragment>
     )
 }
 

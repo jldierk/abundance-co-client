@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 
 export default function CartPage(props) {
     var cart = props.cart;
-    if (!cart || !cart.orderItems) return (<div className="main-content"><div className="info-block">No cart information found</div></div>);
+    if (!cart) return (<div className="main-content"><div className="info-block">Something's amiss! Your cart information found, please try again!</div></div>);
+
+    if (!cart.orderItems || cart.orderItems.length == 0) return (<div className="main-content"><div className="info-block">You have no items in your cart yet!</div></div>)
 
     return (
         <div className="main-content">

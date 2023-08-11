@@ -64,13 +64,15 @@ export default function ProductView(props) {
                     <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "1px solid var(--smoke)"}} src={product.imageUrl}></img>
                 </div>
                 <div style={{flex: 2}}>
-                    <h2>{product.productName}</h2>
-                    {product.scents && <div>{product.scents.map(scent=>scent.scentName).join(", ")}</div>}
-                    <div>{product.description}</div>
-                    
-                    {item && <div>{item.size}</div>}
-                    {item && <div>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</div>}
-                    <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant} saving={saving} saved={saved}/>                                        
+                    <h1 style={{textAlign:"center"}}>{product.productName}</h1>
+                    <table style={{border: "none"}}>        
+                        {product.scents && <tr><td className="label">Scents:</td><td>{product.scents.map(scent=>scent.scentName).join(", ")}</td></tr>}
+                        <tr><td className="label">Description:</td><td>{product.description}</td></tr>
+                        
+                        {item && <tr><td className="label">Size: </td><td>{item.size}</td></tr>}
+                        {item && <tr><td className="label">Price: </td><td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</td></tr>}
+                        <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant} saving={saving} saved={saved}/>                                        
+                    </table>
                 </div>
             </div>
         </div>
@@ -91,20 +93,21 @@ function AddToCartButton(props) {
 
     if (cart && cart.orderItems && cart.orderItems.some(oi=>oi.itemId == item.id)) {
         return (
-            <div style={{marginTop: "15px", marginBottom: "15px"}}>
-                <span>
-                    <select style={{marginRight:"15px", width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
-                        {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
-                    </select>
-                </span>              
-                <span>
-                    {/* <button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Update Cart</button> */}
-                    {!saved && <ButtonWithLoad height="30px" buttonLabel="Update Quantity" onClickFunction={() => props.addToCartAction(item)} loading={props.saving}/>}
-                    {saved && <span>Cart Updated!</span>}
-                </span>
-            </div>
+            <React.Fragment>
+                <tr>
+                    <td className="label">
+                        <select style={{width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
+                            {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
+                        </select>
+                    </td>
+                    <td>
+                        {!saved && <ButtonWithLoad height="30px" buttonLabel="Update Quantity" onClickFunction={() => props.addToCartAction(item)} loading={props.saving}/>}
+                        {saved && <span>Cart Updated!</span>}
+                    </td>
+                </tr>
+            </React.Fragment>
         )
     } else {
-        return (<button className="button btn-black-white" onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
+        return (<button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
     }
 }

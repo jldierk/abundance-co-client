@@ -3,9 +3,9 @@
 }
 
 :root {
-  --smoke: #2b2b2b;
-  --secondaryColor: #78a0b4;
-  --background: #fbfaf5;
+  --smoke: #3f3f3f;
+  --secondaryColor: #44889b;
+  --background: #ffffff;
   font-family: "Creato";
 }
 
@@ -19,6 +19,13 @@ a {
   font-style: normal;
   font-weight: normal;
   src: local('Creato'), url('src/assets/fonts/CreatoDisplay-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Creato';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Creato'), url('src/assets/fonts/CreatoDisplay-Bold.otf') format('opentype');
 }
 
 body {
