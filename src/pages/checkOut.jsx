@@ -5,6 +5,7 @@ export default function CheckOut(props) {
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     const [deliveryMethod, setDeliveryMethod] = useState("DELIVERY");
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [invalidEmail, setInvalidEmail] = useState(false);
     const emailRegExp = new RegExp("\\S+@\\S+\\.\\S+");
@@ -41,7 +42,7 @@ export default function CheckOut(props) {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({userEmail: email, deliveryMethod: deliveryMethod, address: address, comments: comments})
+            body: JSON.stringify({name: name, userEmail: email, deliveryMethod: deliveryMethod, address: address, comments: comments})
         })
         .then(response => response.json())
         .then(json => {
@@ -73,12 +74,18 @@ export default function CheckOut(props) {
                         {isDelivery && <AddressInput onChange={setAddress} address={address}/>}
                         {!isDelivery && <PickupComments onChange={setComments} comments={comments}/>}
                         <tr>
+                            <td className="label">Name:</td>
+                            <td>
+                                <input className="admin-input" style={{width:"150px"}} type="text" id="name" name="name" onChange={(e) => {setName(e.target.value)}} value={name}/>                                
+                            </td>
+                        </tr>
+                        <tr>
                             <td className="label">Email:</td>
                             <td>
                                 <input className={"admin-input " + invalidEmailClass} style={{width:"150px"}} type="text" id="email" name="email" onChange={(e) => {updateEmail(e.target.value)}} value={email}/>
                                 {invalidEmail && <div className="error-message">Please enter an email address to submit your order</div>}
                             </td>
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td className="label">Order Subtotal:</td>
                             <td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(cart.orderTotal)}</td>
@@ -162,7 +169,7 @@ function AddressInput(props) {
 function OrderSubmitted() {
     return (
         <div className="info-block">
-            Thank you for your order! Abundance will be in contact with you shortly to arrange shipping and collect payment.
+            Thank you for your order!
         </div>
     )
 }

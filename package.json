@@ -9,8 +9,9 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "add-domain": "echo \"www.abundancecandleco.com\" > dist/CNAME",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run gh-pages -d dist && add-domain"
   },
   "dependencies": {
     "react": "^18.2.0",
