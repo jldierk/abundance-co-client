@@ -34,7 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout user={user} cart={cart}/>}>
             <Route index element={<Home />} />
-            <Route path="admin" element={<Admin />} />
+            <Route path="admin" element={<Admin user={user} setUserCallback={setUser}/>} />
             <Route path="product" element={<ProductView cart={cart} updateCart={setCart}/>} />
             <Route path="cart" element={<CartPage cart={cart} setCartCallback={setCart}/>} />
             <Route path="checkOut" element={<CheckOut cart={cart} setCartCallback={setCart}/>} />

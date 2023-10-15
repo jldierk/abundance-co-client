@@ -6,6 +6,7 @@ import LoginButton from "./LoginButton";
 
 const NavBar = (props) => {
     var cart = props.cart;
+    var user = props.user;
   
     var cartCount = 0;
     if (cart && cart.orderItems) {
@@ -32,9 +33,12 @@ const NavBar = (props) => {
                             </div>
                         </a>
                     </div>
-                    <div className="navbar-item">
-                        <a href="/admin"><button className="button btn-primary-colors">Admin Console</button></a>
-                    </div>
+                    {
+                        user && user.userType == "ADMIN" &&    
+                        <div className="navbar-item">
+                            <a href="/admin"><button className="button btn-primary-colors">Admin Console</button></a>
+                        </div>
+                    }
                 
                     {/* We're not going to allow users to login, people can just check in as guests
                      <div className="navbar-item">
