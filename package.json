@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "add-domain": "echo \"www.abundancecandleco.com\" > dist/CNAME",
     "predeploy": "npm run build",
-    "deploy": "npm run gh-pages -d dist && add-domain"
+    "deploy": "npm run add-domain && gh-pages -d dist"
   },
   "dependencies": {
     "react": "^18.2.0",
