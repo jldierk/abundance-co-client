@@ -9,3 +9,4 @@ Currently, two official plugins are available:
 
 
 To Start this project run "npm run dev" from the root directory
+"npm run deploy" to deploy to github pages

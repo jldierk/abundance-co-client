@@ -18,14 +18,14 @@ a {
   font-family: 'Creato';
   font-style: normal;
   font-weight: normal;
-  src: local('Creato'), url('src/assets/fonts/CreatoDisplay-Regular.otf') format('opentype');
+  src: local('Creato'), url('./fonts/CreatoDisplay-Regular.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Creato';
   font-style: normal;
   font-weight: bold;
-  src: local('Creato'), url('src/assets/fonts/CreatoDisplay-Bold.otf') format('opentype');
+  src: local('Creato'), url('./fonts/CreatoDisplay-Bold.otf') format('opentype');
 }
 
 body {
