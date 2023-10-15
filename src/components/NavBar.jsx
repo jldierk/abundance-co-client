@@ -7,6 +7,7 @@ import LoginButton from "./LoginButton";
 const NavBar = (props) => {
     var cart = props.cart;
     var user = props.user;
+    const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
   
     var cartCount = 0;
     if (cart && cart.orderItems) {
@@ -15,6 +16,21 @@ const NavBar = (props) => {
             var orderItem = orderItemArr[i];
             cartCount += (orderItem && orderItem.quantity) ? orderItem.quantity : 0;
         }
+    }
+
+    function logout() {
+        const requestOptions = {    
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+          };
+          let url = BACKEND_BASE_URL + '/api/v1/users/logout';
+          fetch(url, requestOptions)            
+            .then(data=> {
+              console.log("Logged out User");
+              props.setUserCallback(null);
+            })
+            .catch(err => {console.log("Error " + err.json)});
     }
 
     return (
@@ -37,6 +53,7 @@ const NavBar = (props) => {
                         user && user.userType == "ADMIN" &&    
                         <div className="navbar-item">
                             <a href="/#/admin"><button className="button btn-primary-colors">Admin Console</button></a>
+                            <button className="button btn-primary-colors" style={{marginTop: "15px", marginBottom: "15px"}} onClick={logout.bind(this)}>Logout</button>                        
                         </div>
                     }
                 

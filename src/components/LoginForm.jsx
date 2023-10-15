@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const LoginForm = (props) => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     function login() {
@@ -22,13 +23,20 @@ const LoginForm = (props) => {
             .then(response=>response.json())
             .then(data=> {
               console.log("Attempted Login For User: " + userName);
-              props.setUserCallback(data);
+              if (data.userId) {
+                props.setUserCallback(data);
+              } else {
+                setErrorMessage("Invalid login. Please check your credentials and try again.");
+              }            
             })
-            .catch(err => {console.log("Error " + err.json)});
+            .catch(err => {
+                console.log("Error " + err)
+            });
     }
 
-    return (
+    return (        
         <div>
+            {errorMessage && <div className="warning">{errorMessage}</div>}
             <div className="input-wrapper">
                 <span className="label">Username : </span>
                 <span><input className="admin-input" type="text" id="userName" name="userName" value={userName} onChange={(e) => {setUserName(e.target.value)}}/></span>

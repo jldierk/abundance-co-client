@@ -32,7 +32,7 @@ function App() {
     <body>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<Layout user={user} cart={cart}/>}>
+          <Route path="/" element={<Layout user={user} cart={cart} setUserCallback={setUser}/>}>
             <Route index element={<Home />} />
             <Route path="admin" element={<Admin user={user} setUserCallback={setUser}/>} />
             <Route path="product" element={<ProductView cart={cart} updateCart={setCart}/>} />

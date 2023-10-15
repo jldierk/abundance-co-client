@@ -7,7 +7,7 @@ const Layout = (props) => {
     return(
         <>
             <div style={{display:"flex", flexDirection: "column", minHeight: "100vh"}}>
-                <NavBar user={props.user} cart={props.cart}/>
+                <NavBar user={props.user} cart={props.cart} setUserCallback={props.setUserCallback}/>
                 <Outlet/>
                 <Footer/>
             </div>
