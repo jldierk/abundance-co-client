@@ -3,9 +3,11 @@
 }
 
 :root {
-  --smoke: #3f3f3f;
-  --secondaryColor: #44889b;
-  --background: #ffffff;
+  --smoke: #2b2129;
+  --secondaryColor: #708a81;
+  --background: #e5d1b8;
+  --tertiaryColor: #dabfa8;
+  --navTextColor: #fff;
   font-family: "Creato";
 }
 
@@ -29,6 +31,7 @@ a {
 }
 
 body {
+  color: var(--smoke);
   margin: 0;
   background-color: var(--background);
 }

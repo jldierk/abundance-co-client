@@ -34,7 +34,7 @@ const NavBar = (props) => {
     }
 
     return (
-        <div className="nav-bar">
+        <div className="nav-bar" style={{color: "var(--navTextColor)"}}>
             <div className="nav-content">
                 <div className="navbar-item" style={{flex: 1}}>
                     <a href="/"><img style={{width:"300px", height:"100px"}} src={AbundanceSolo}/></a>
@@ -52,8 +52,8 @@ const NavBar = (props) => {
                     {
                         user && user.userType == "ADMIN" &&    
                         <div className="navbar-item">
-                            <a href="/#/admin"><button className="button btn-primary-colors">Admin Console</button></a>
-                            <button className="button btn-primary-colors" style={{marginTop: "15px", marginBottom: "15px"}} onClick={logout.bind(this)}>Logout</button>                        
+                            <a href="/#/admin"><button className="button btn-nav-colors">Admin Console</button></a>
+                            <button className="button btn-nav-colors" style={{marginTop: "15px", marginBottom: "15px"}} onClick={logout.bind(this)}>Logout</button>                        
                         </div>
                     }
                 

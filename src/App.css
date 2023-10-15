@@ -7,7 +7,7 @@
 .footer {
   padding: 20px;
   background-color: var(--secondaryColor);
-  color: var(--background);
+  color: var(--navTextColor);
   /* border-top: 2px solid #3e6866; */
 }
 
@@ -90,6 +90,18 @@
   border: 2px solid var(--secondaryColor);
 }
 
+.btn-nav-colors {
+  background-color: var(--secondaryColor);
+  color: var(--navTextColor);
+  border: 2px solid var(--navTextColor);
+}
+
+.btn-nav-colors:hover {
+  background-color: var(--navTextColor);
+  color: var(--secondaryColor);
+  border: 2px solid var(--secondaryColor);
+}
+
 .btn-black-white{
   color: var(--smoke);
   background-color: var(--background);
@@ -104,7 +116,7 @@
 
 .product-card {
   padding: 15px;
-  margin: 10px;
+  margin: 8px;
   width: 250px;
   height: 300px;
   border-radius: 10px;
@@ -112,10 +124,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* border: 1px solid var(--smoke); */
+  /* border: 2px solid var(--smoke); */
   text-decoration: none;
-  background-color: #f1f1f1;
-  color: var(--smoke);
+  background-color: var(--tertiaryColor);  
 }
 
 .product-card:hover {
@@ -161,7 +172,7 @@
 }
 
 .bubble-text {
-  background-color: var(--background);
+  background-color: var(--navTextColor);
   padding: 2px 10px 2px 10px;
   color: var(--secondaryColor);
   text-align: center;
