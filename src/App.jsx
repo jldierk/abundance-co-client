@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
 import Layout from './Layout'
 import Home from './pages/home'
 import Admin from './pages/admin'
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <body>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Layout user={user} cart={cart}/>}>
             <Route index element={<Home />} />
@@ -41,7 +41,7 @@ function App() {
             <Route path="*" element={<Home />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </body>
   )
 }

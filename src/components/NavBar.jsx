@@ -26,7 +26,7 @@ const NavBar = (props) => {
                 {/* <div className="navbar-item" style={{flex: 1, justifyContent: "center", textAlign: "center"}}></div> */}
                 <div style={{flex: 1, display: "flex", alignItems: "center", justifyContent: "right"}}>                    
                     <div className="navbar-item" style={{display:"flex", alignItems:"center"}}>
-                        <a href="/cart">
+                        <a href="/#/cart">
                             <div style={{display:"flex", alignItems: "center"}}>
                                 <img src={CartIcon}/>
                                 <div><span>Cart</span><span className="bubble-text">{cartCount}</span></div>
@@ -36,7 +36,7 @@ const NavBar = (props) => {
                     {
                         user && user.userType == "ADMIN" &&    
                         <div className="navbar-item">
-                            <a href="/admin"><button className="button btn-primary-colors">Admin Console</button></a>
+                            <a href="/#/admin"><button className="button btn-primary-colors">Admin Console</button></a>
                         </div>
                     }
                 

@@ -8,7 +8,7 @@ export default function Home() {
     const navigate = useNavigate();
 
     const toProductView=(productToView)=>{
-        navigate('/product',{state:{product: productToView}});
+        navigate('/#/product',{state:{product: productToView}});
     }
 
     useEffect(() => {

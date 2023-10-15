@@ -23,7 +23,7 @@ export default function CartPage(props) {
                         </div>
                     </div>
                     <div>
-                        <a href="/checkOut"><button style={{margin: "10px 0px 5px 0px", width: "100%"}} className="button btn-black-white">Proceed</button></a>
+                        <a href="/#/checkOut"><button style={{margin: "10px 0px 5px 0px", width: "100%"}} className="button btn-black-white">Proceed</button></a>
                     </div>
                 </div>
             </div>
