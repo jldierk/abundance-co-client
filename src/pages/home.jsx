@@ -22,7 +22,7 @@ export default function Home() {
     return (
         <div style={{backgroundColor: "var(--background)"}}>        
             <div className="info-block">
-                Abundance Candles are hand-poured in Chicago.
+                Abundance Candles are hand-poured in Chicago, Illinois.
             </div>
             {/* <img src="src/assets/images/abundance-banner.jpg" style={{width: "100vw"}}></img>         */}
             <div className="main-content">               
