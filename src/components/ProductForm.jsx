@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ProductItemSet from "./ProductItemSet";
+import DraggableTable from "./DraggableTable";
 
 const ProductForm = () => {
     const [loading, setLoading] = useState(true);
@@ -19,10 +20,6 @@ const ProductForm = () => {
           .catch(error => console.error(error));
     }, [selectedProduct]);
 
-    function selectProduct(selected) {
-        setSelectedProduct(selected);
-    }
-
     function addNewProduct() {
         var newProduct = {};
         setProductArr(productArr => [...productArr, newProduct]);
@@ -33,23 +30,11 @@ const ProductForm = () => {
         <div style={{display: "flex", width:"100%", justifyContent: "space-evenly"}}>
             <div>
                 <h3>Products</h3>
-                <table>
-                {productArr.map(product => {
-                    var selected = selectedProduct && product.id == selectedProduct.id;
-                    return (
-                        <tr className={"table-row " + (selected ? "selected-row" : "")} onClick={selectProduct.bind(this, product)}>
-                            <td>{product.productName}</td>
-                            {/* <td>{product.description}</td> */}
-                            {/* <td><a>{product.imageUrl}</a></td> */}
-                        </tr>
-                    )
-                }
-                )}
-                </table>
+                <DraggableTable elements={productArr} updateElementsCallback={setProductArr} updateSelectedCallback={setSelectedProduct}/>
                 <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
             </div>
             <div>
-                {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={selectProduct}/>}                
+                {selectedProduct && <SelectedProduct product={selectedProduct} updateSelected={setSelectedProduct}/>}                
             </div>
             <div>
                 {selectedProduct && <h3>Sample View</h3>}
