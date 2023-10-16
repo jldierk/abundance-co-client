@@ -219,6 +219,24 @@
   box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
 }
 
+.table-row.drop-zone {
+  height: 20px;
+  transition-property: line-height 20px;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  overflow: hidden;
+}
+
+.table-row.drop-zone.hidden {
+  height: 0px;
+  padding: 0px
+}
+
+.table-row.drop-zone.hidden td {
+  height: 0px;
+  padding: 0px
+}
+
 @keyframes rotation {
   from {
     transform: rotate(0deg);

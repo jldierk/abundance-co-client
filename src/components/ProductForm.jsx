@@ -26,11 +26,32 @@ const ProductForm = () => {
         setSelectedProduct(newProduct);
     }
 
+    function updateElementOrder(products) {
+        for (let i = 0; i < products.length; i++) {
+            products[i].sortOrder = i;
+        }
+
+        const requestOptions = {    
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },            
+            body: JSON.stringify(products)
+          };
+          let url = BACKEND_BASE_URL + '/api/v1/products/multi';
+          fetch(url, requestOptions)
+            .then(response=>response.json())
+            .then(data=> {
+                setProductArr(data);
+            })
+            .catch(err => {
+                console.log("Error " + err)
+            });
+    }
+
     return (
         <div style={{display: "flex", width:"100%", justifyContent: "space-evenly"}}>
             <div>
                 <h3>Products</h3>
-                <DraggableTable elements={productArr} updateElementsCallback={setProductArr} updateSelectedCallback={setSelectedProduct}/>
+                <DraggableTable elements={productArr} updateElementsCallback={updateElementOrder} updateSelectedCallback={setSelectedProduct}/>
                 <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={addNewProduct.bind(this)}>New Product</button>
             </div>
             <div>

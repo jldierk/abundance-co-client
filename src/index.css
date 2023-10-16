@@ -43,3 +43,7 @@ table {
 td {
   padding: 3px;
 }
+
+td.fill-width {
+  width: 100%;
+}
