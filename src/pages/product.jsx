@@ -10,10 +10,13 @@ export default function ProductView(props) {
     const [saved, setSaved] = useState(false);
     const location = useLocation();
     var product = location.state.product;
+    var isMobile = props.isMobile;
     if (!product) {return (<div>Product Not Found</div>)}
     
     let cart = props.cart;
     let item = itemArr[0];
+    let imageSize = isMobile ? "200px" : "400px";
+    let detailsFlexDir = isMobile ? "column" : "row";
 
     function handleQuantityChange(event) {
         var quantity = event.target.value;
@@ -59,9 +62,9 @@ export default function ProductView(props) {
     
     return (
         <div className="main-content" style={{display:"flex"}}>        
-            <div style={{flex: 1, display: "flex", alignItems:"center", justifyContent: "space-evenly"}}>
+            <div style={{flex: 1, display: "flex", alignItems:"center", justifyContent: "space-evenly", flexDirection: detailsFlexDir}}>
                 <div style={{flex: 3, textAlign:"center"}}>
-                    <img style={{height: "400px", width:"400px", borderRadius:"15px", border: "1px solid var(--smoke)"}} src={product.imageUrl}></img>
+                    <img style={{height: imageSize, width:imageSize, borderRadius:"15px", border: "1px solid var(--smoke)"}} src={product.imageUrl}></img>
                 </div>
                 <div style={{flex: 2}}>
                     <h1 style={{textAlign:"center"}}>{product.productName}</h1>

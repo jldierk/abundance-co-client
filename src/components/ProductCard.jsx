@@ -9,12 +9,12 @@ const ProductCard = (props) => {
     let scents = product.scents;
 
     return (
-        <div className="product-card">
+        <div className="product-card" key={product.id}>
             <div className="image-wrapper">                
                 <img className="product-image" src={product.imageUrl}></img>
                 <div className="scent-overlay">
                     <div style={{opacity: "1", display: "flex", flex: "1", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "250px"}}>
-                        {scents && scents.map(scent=> <div>{scent.scentName}</div>)}
+                        {scents && scents.map(scent=> <div key={scent.id}>{scent.scentName}</div>)}
                     </div>
                 </div>
             </div>
