@@ -162,12 +162,11 @@
 
 .order-item-card {
   align-items: center;
-  margin: 15px;
+  margin: 0px 0px 15px 0px;
   border: 1px solid var(--smoke);
   border-radius: 15px;
-  width: 500px;
-  height: 205px;
   display: flex;
+  padding: 10px;
 }
 
 .bubble-text {

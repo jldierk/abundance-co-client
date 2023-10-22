@@ -38,19 +38,19 @@ function App() {
       .catch(error => console.error(error)); 
   }, []);
 
-  if (isMobile) {
-    return (
-      <div>
-        <div style={{display:"flex", flexDirection: "column", minHeight: "100vh"}}>
-          <NavBar/>
-          <div className="main-content">
-            Welcome to Abundance Candle Co! Support for mobile browsers is coming soon, 
-            but in the meantime please connect via your desktop or laptop computer. Thanks!
-          </div>
-        </div>
-      </div>
-    )
-  }
+  // if (isMobile) {
+  //   return (
+  //     <div>
+  //       <div style={{display:"flex", flexDirection: "column", minHeight: "100vh"}}>
+  //         <NavBar/>
+  //         <div className="main-content">
+  //           Welcome to Abundance Candle Co! Support for mobile browsers is coming soon, 
+  //           but in the meantime please connect via your desktop or laptop computer. Thanks!
+  //         </div>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div>
@@ -60,7 +60,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="admin" element={<Admin user={user} setUserCallback={setUser}/>} />
             <Route path="product" element={<ProductView cart={cart} updateCart={setCart} isMobile={isMobile}/>} />
-            <Route path="cart" element={<CartPage cart={cart} setCartCallback={setCart}/>} />
+            <Route path="cart" element={<CartPage cart={cart} setCartCallback={setCart} isMobile={isMobile}/>} />
             <Route path="checkOut" element={<CheckOut cart={cart} setCartCallback={setCart}/>} />
             <Route path="*" element={<Home />} />
           </Route>
