@@ -3,12 +3,13 @@ import ButtonWithLoad from "../components/ButtonWithLoad";
 
 export default function CheckOut(props) {
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
+    const emailRegExp = new RegExp("\\S+@\\S+\\.\\S+");
 
+    const [errorMessage, setErrorMessage] = useState(null);
     const [deliveryMethod, setDeliveryMethod] = useState("DELIVERY");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [invalidEmail, setInvalidEmail] = useState(false);
-    const emailRegExp = new RegExp("\\S+@\\S+\\.\\S+");
     const [submitted, setSubmitted] = useState(false);
     const [saving, setSaving] = useState(false);
     const [address, setAddress] = useState({});
@@ -17,6 +18,7 @@ export default function CheckOut(props) {
     var cart = props.cart;
     if (submitted) return (<div className="main-content"><OrderSubmitted/></div>);
     else if (!cart || !cart.orderItems) return (<div className="main-content"><div className="info-block">No cart information found</div></div>);
+    else if (errorMessage) return (<div className="main-content"><div className="info-block">{errorMessage}, please try again</div></div>);
     
     let isDelivery = deliveryMethod == "DELIVERY";
     let shippingCost = isDelivery ? 10 : 0;
@@ -36,6 +38,7 @@ export default function CheckOut(props) {
             return;
         }
         
+        setErrorMessage(null);
         setSaving(true);
         let uri = BACKEND_BASE_URL + "/api/v1/orders/cart/submit"
         fetch(uri, {  
@@ -44,22 +47,43 @@ export default function CheckOut(props) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({name: name, userEmail: email, deliveryMethod: deliveryMethod, address: address, comments: comments})
         })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();                
+            } else {
+                response.json().then(obj => {
+                    setSubmitted(false);
+                    setSaving(false);
+                    setErrorMessage(obj.message);
+                })
+            }
+        })
+        .then(response=>response.json)
         .then(json => {
             props.setCartCallback(null);
             setSubmitted(true);
             setSaving(false);
         }) //null out the cart
-        .catch(error => console.error(error));
+        .catch(error => {
+            setSubmitted(false);
+            setSaving(false);
+            setErrorMessage(error.message);
+            console.error(error.message);
+        });
     }
 
     var invalidEmailClass = invalidEmail ? "validation-error" : "";
+
+    if (errorMessage) {
+
+    }
 
     return (
         <div className="main-content">     
             <div style={{display:"flex", justifyContent: "center"}}>
                 <div style={{width:"300px"}}>
                     <h2 style={{textAlign:"center", margin:"0px"}}>Check Out</h2>
+                    {errorMessage != null && <div className="warning" style={{marginTop: "5px"}}>{errorMessage}</div>}
                     <div className="warning" style={{marginTop: "5px"}}>This website will not take any payment information directly. We will contact you directly to organize payment and delivery.</div>
                     <table style={{border: "none"}}>
                         <tr>

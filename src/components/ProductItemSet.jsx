@@ -34,17 +34,23 @@ function ItemDetails(props) {
 
     const [itemSize, setItemSize] = useState(item.size);
     const [itemPrice, setItemPrice] = useState(item.price);
+    const [numInStock, setNumInStock] = useState(item.numInStock);
+    const [saved, setSaved] = useState(false);
 
     useEffect(() => { 
         setItemSize(item.size || "10 oz.");
         setItemPrice(item.price || "");
-    }, [item.size, item.price] )
+        setNumInStock(item.numInStock || 0);
+        setSaved(false);
+    }, [item.size, item.price, item.numInStock] )
 
 
     function saveItem() {
         item.size = itemSize;
         item.price = itemPrice;
         item.productId = productId;
+        item.numInStock = numInStock;
+        setSaved(false);
 
         const requestOptions = {    
             method: 'PUT',
@@ -55,24 +61,38 @@ function ItemDetails(props) {
           fetch(url, requestOptions)
             .then(response=>response.json())
             .then(data=> {
-              console.log("Saved item data: " + data);            
+              console.log("Saved item data: " + data);   
+              setSaved(true);         
             })
             .catch(err => {console.log("Error " + err.json)});
     }
 
     return (
         <div style={{marginTop:"10px"}}>
-            <span>
-                <select style={{marginRight:"15px", width:"100px"}} onChange={(e) => {setItemSize(e.target.value)}} value={itemSize}>
-                    <option key="tenoz" value="10 oz.">10 oz.</option>
-                </select>
-            </span>
-            <span>
-                <input className="admin-input" style={{width:"100px"}} type="text" id="price" name="price" value={itemPrice} onChange={(e) => {setItemPrice(e.target.value)}}/>
-            </span>
-            <span>
-                <button className="button btn-black-white" style={{marginLeft:"10px"}} onClick={() => saveItem()}>Save Item</button>
-            </span>
+            <table>
+                <tr>
+                    <td>Size</td>
+                    <td>Price</td>
+                    <td>Num In Stock</td>
+                </tr>
+                <tr>
+                    <td>
+                        <select style={{marginRight:"15px", width:"100px"}} onChange={(e) => {setItemSize(e.target.value)}} value={itemSize}>
+                            <option key="tenoz" value="10 oz.">10 oz.</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input className="admin-input" style={{width:"100px"}} type="text" id="price" name="price" value={itemPrice} onChange={(e) => {setItemPrice(e.target.value)}}/>
+                    </td>
+                    <td>
+                        <input className="admin-input" style={{width:"100px"}} type="text" id="numInStock" name="numInStock" value={numInStock} onChange={(e) => {setNumInStock(e.target.value)}}/>
+                    </td>
+                    <td>
+                        {saved && <div style={{textAlign:"center"}}>Saved!</div>}
+                        <button className="button btn-black-white" style={{marginLeft:"10px"}} onClick={() => saveItem()}>Save Item</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     )
 }

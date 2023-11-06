@@ -69,13 +69,13 @@ export default function ProductView(props) {
                 <div style={{flex: 2}}>
                     <h1 style={{textAlign:"center"}}>{product.productName}</h1>
                     <table style={{border: "none"}}>        
-                        {product.scents && <tr><td className="label">Scents:</td><td>{product.scents.map(scent=>scent.scentName).join(", ")}</td></tr>}
-                        <tr><td className="label">Description:</td><td>{product.description}</td></tr>
+                        {product.scents && <tr><td className="product-label">Scents:</td><td>{product.scents.map(scent=>scent.scentName).join(", ")}</td></tr>}
+                        <tr><td className="product-label">Description:</td><td>{product.description}</td></tr>
                         
-                        {item && <tr><td className="label">Size: </td><td>{item.size}</td></tr>}
-                        {item && <tr><td className="label">Price: </td><td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</td></tr>}
-                        <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant} saving={saving} saved={saved}/>                                        
+                        {item && <tr><td className="product-label">Size: </td><td>{item.size}</td></tr>}
+                        {item && <tr><td className="product-label">Price: </td><td>{new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'}).format(item.price)}</td></tr>}
                     </table>
+                    <AddToCartButton onChangeQuantity={handleQuantityChange} cart={cart} item={item} addToCartAction={addToCart} quantity={itemQuant} saving={saving} saved={saved}/>                                        
                 </div>
             </div>
         </div>
@@ -94,14 +94,24 @@ function AddToCartButton(props) {
 
     useEffect(() => {},[props.saving])
 
+    var numInStock = item.numInStock;
     if (cart && cart.orderItems && cart.orderItems.some(oi=>oi.itemId == item.id)) {
         return (
             <React.Fragment>
                 <tr>
-                    <td className="label">
-                        <select style={{width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
-                            {[1,2,3,4,5,6,7,8,9].map(value => <option key={"quant_" + value}value={value}>{value}</option>)}
-                        </select>
+                    <td className="product-label">
+                        {numInStock > 0 &&
+                            <select style={{width:"40px"}} onChange={props.onChangeQuantity.bind(this)} value={quantity}>
+                            {
+                                (() => {
+                                const options = [];
+                                for (let i = 0; i <= numInStock; i++) {
+                                    options.push(<option key={"quant_" + i} value={i}>{i}</option>);
+                                }
+                                return options;})()
+                            }
+                            </select>
+                        }                    
                     </td>
                     <td>
                         {!saved && <ButtonWithLoad height="30px" buttonLabel="Update Quantity" onClickFunction={() => props.addToCartAction(item)} loading={props.saving}/>}
@@ -111,6 +121,10 @@ function AddToCartButton(props) {
             </React.Fragment>
         )
     } else {
-        return (<button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
+        if (numInStock > 0) {
+            return (<button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={() => {props.addToCartAction(item)}}>Add To Cart</button>)
+        } else {
+            return (<div><i>This product is currently out of stock. Check back soon!</i></div>)
+        }
     }
 }
