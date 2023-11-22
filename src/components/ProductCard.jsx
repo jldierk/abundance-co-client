@@ -7,7 +7,7 @@ const ProductCard = (props) => {
     }
 
     let scents = product.scents;
-    let outOfStock = product.items.every(item=> !item.numInStock || item.numInStock == 0);
+    let outOfStock = product.items != null && product.items.every(item=> !item.numInStock || item.numInStock == 0);
     let productClass = outOfStock ? "product-image grayscale" : "product-image";
     return (
         <div className="product-card" key={product.id}>
