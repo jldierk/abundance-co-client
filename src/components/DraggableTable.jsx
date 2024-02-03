@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import DragIcon from "../assets/drag.svg"
+import HideIcon from "../assets/hide.svg"
 
 
 const DraggableTable = (props) => {
@@ -96,6 +97,7 @@ const DraggableTable = (props) => {
                             <tr className={rowClass} index={index} key={element.id}>
                                 <td style={{cursor:"grab"}} onMouseDown={() => {setDragging(index)}}><img src={DragIcon}/></td>
                                 <td className="fill-width" onClick={updateSelection.bind(this, index)}>{element.productName}</td>
+                                {!element.activeInd && <td><img src={HideIcon}/></td>}
                             </tr>
                             <tr className={"table-row drop-zone " + (index + 1 == dropZone ? "" : "hidden")}><td/><td/></tr>                        
                         </div>            

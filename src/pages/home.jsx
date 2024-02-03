@@ -38,7 +38,8 @@ export default function Home() {
             <div className="main-content">               
                 <div style={{display:"flex", width:"100%", justifyContent:"center"}}>
                     <div style={{display: "flex", width:"910px", flexWrap:"wrap", justifyContent: "space-evenly", margin:"50px"}}>            
-                        {productArr.map(product=><div key={product.id}><a onClick={()=>{toProductView(product)}}><ProductCard key={product.id} product={product}></ProductCard></a></div>)}            
+                        {productArr.filter(product=>product.activeInd == true)
+                                    .map(product=><div key={product.id}><a onClick={()=>{toProductView(product)}}><ProductCard key={product.id} product={product}></ProductCard></a></div>)}            
                     </div>
                 </div>
             </div>            

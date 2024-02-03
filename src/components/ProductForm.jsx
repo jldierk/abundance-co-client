@@ -69,9 +69,10 @@ function SelectedProduct(props) {
     var product = props.product;
     const [inputName, setInputName] = useState(product.productName || "");
     const [inputDescription, setInputDescription] = useState(product.description || "");
-    const [inputImageUrl, setInputImageUrl] = useState(product.inputImageUrl || "");
+    const [inputImageUrl, setInputImageUrl] = useState(product.imageUrl || "");
     var scents = convertScentsToString(product.scents);
     const [inputScents, setInputScents] = useState(scents || "");
+    const [inputActive, setInputActive] = useState(product.activeInd);
     const BACKEND_BASE_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
     useEffect(() => { 
@@ -79,7 +80,8 @@ function SelectedProduct(props) {
         setInputDescription(product.description || "");
         setInputImageUrl(product.imageUrl || "");
         setInputScents(convertScentsToString(product.scents));
-    }, [product.productName, product.description, product.imageUrl] )
+        setInputActive(product.activeInd);
+    }, [product.productName, product.description, product.imageUrl, product.activeInd] )
 
     function convertScentsToString(scentArr) {
         if (scentArr) {
@@ -96,6 +98,7 @@ function SelectedProduct(props) {
         var scentArr = inputScents.split(",");
         var scents = JSON.parse("[" + scentArr.map(scent=>"{\"scentName\": \"" + scent + "\"}").join(",") + "]")
         product.scents = scents;
+        product.activeInd = inputActive;
 
         const requestOptions = {    
             method: 'PUT',
@@ -135,6 +138,14 @@ function SelectedProduct(props) {
                 <div className="input-wrapper">
                     <span className="label">Scents: </span>
                     <span><input className="admin-input" type="text" id="scents" name="scents" value={inputScents} onChange={(e) => {setInputScents(e.target.value)}}/></span>
+                </div>
+                <div className="input-wrapper">
+                    <span className="label">Active: </span>
+                    <span><select style={{marginRight:"15px", width:"100px"}} value={inputActive} onChange={(e) => {setInputActive(e.target.value)}}>
+                            <option key="active" value={true}>Active</option>
+                            <option key="inactive" value={false}>Inactive</option>
+                        </select>
+                    </span>
                 </div>
 
                 <button className="button btn-black-white" style={{marginTop: "15px", marginBottom: "15px"}} onClick={saveProduct.bind(this)}>Save</button>
