@@ -79,6 +79,7 @@ function ItemDetails(props) {
                     <td>
                         <select style={{marginRight:"15px", width:"100px"}} onChange={(e) => {setItemSize(e.target.value)}} value={itemSize}>
                             <option key="eightoz" value="8 oz.">8 oz.</option>
+                            <option key="eightoz" value="9 oz.">9 oz.</option>
                             <option key="tenoz" value="10 oz.">10 oz.</option>
                         </select>
                     </td>
